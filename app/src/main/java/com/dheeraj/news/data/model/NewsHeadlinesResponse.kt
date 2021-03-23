@@ -27,7 +27,7 @@ data class Article(
     @SerializedName("url")
     val url: String,
     @SerializedName("urlToImage")
-    val urlToImage: String
+    var urlToImage: String? = null
 )
 
 data class Source(
