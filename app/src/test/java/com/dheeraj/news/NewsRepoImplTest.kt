@@ -5,6 +5,7 @@ import com.dheeraj.news.data.api.NewsApiService
 import com.dheeraj.news.data.repository.dataSource.NewsRemoteDataSource
 import com.dheeraj.news.data.repository.dataSourceImpl.NewsRemoteDataSourceImpl
 import com.dheeraj.news.domain.repository.NewsRepository
+import com.dheeraj.news.util.Resource
 import com.google.common.truth.Truth.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
@@ -60,7 +61,10 @@ class NewsRepoImplTest {
         runBlocking {
             newsRepository.getLikes(articleId = "www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html")
                 .collect { response ->
-                    assertThat(response.data).isNotNull()
+                    when (response) {
+                        is Resource.Success ->  assertThat(response.data).isNotNull()
+                        else -> assertThat(response.message).isNotNull()
+                    }
                 }
         }
     }
@@ -70,7 +74,11 @@ class NewsRepoImplTest {
         runBlocking {
             newsRepository.getComments(articleId = "www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html")
                 .collect { response ->
-                    assertThat(response.data).isNotNull()
+                    when (response) {
+                        is Resource.Success ->  assertThat(response.data).isNotNull()
+                        else -> assertThat(response.message).isNotNull()
+                    }
+
                 }
         }
     }

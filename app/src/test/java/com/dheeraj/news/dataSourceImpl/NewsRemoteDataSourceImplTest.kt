@@ -3,6 +3,7 @@ package com.dheeraj.news.dataSourceImpl
 import com.dheeraj.news.data.api.NewsApiService
 import com.dheeraj.news.data.repository.dataSource.NewsRemoteDataSource
 import com.dheeraj.news.data.repository.dataSourceImpl.NewsRemoteDataSourceImpl
+import com.dheeraj.news.util.Resource
 import com.google.common.truth.Truth.*
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
@@ -53,18 +54,20 @@ class NewsRemoteDataSourceImplTest {
     @Test
     fun getLikes_sentRequest_receivedExpected() {
         runBlocking {
-            enqueueMockResponse("likes.json")
-            val response = newsRemoteDataSource.getLikes(articleId = "www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html")
-            assertThat(response.data).isNotNull()
+            when (val response = newsRemoteDataSource.getLikes(articleId = "www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html")) {
+                is Resource.Success ->  assertThat(response.data).isNotNull()
+                else -> assertThat(response.message).isNotNull()
+            }
         }
     }
 
     @Test
     fun getComments_sentRequest_receivedExpected() {
         runBlocking {
-            enqueueMockResponse("comments.json")
-            val response = newsRemoteDataSource.getComments(articleId = "www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html")
-            assertThat(response.data).isNotNull()
+            when (val response = newsRemoteDataSource.getComments(articleId = "www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html")) {
+                is Resource.Success ->  assertThat(response.data).isNotNull()
+                else -> assertThat(response.message).isNotNull()
+            }
         }
     }
 
