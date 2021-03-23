@@ -71,6 +71,30 @@ class NewsApiServiceTest {
         }
     }
 
+    @Test
+    fun getLikes_sentRequest_receivedExpected() {
+        runBlocking {
+            enqueueMockResponse("likes.json")
+            val response = newsApiService.getLikes("/").body()
+            val request = mockWebServer.takeRequest()
+            assertThat(response).isNotNull()
+            assertThat(request.path).isEqualTo("/")
+            assertThat(response?.likes).isEqualTo(96)
+        }
+    }
+
+    @Test
+    fun getComments_sentRequest_receivedExpected() {
+        runBlocking {
+            enqueueMockResponse("comments.json")
+            val response = newsApiService.getComments("/").body()
+            val request = mockWebServer.takeRequest()
+            assertThat(response).isNotNull()
+            assertThat(request.path).isEqualTo("/")
+            assertThat(response?.comments).isEqualTo(96)
+        }
+    }
+
     @After
     fun tearDown() {
         mockWebServer.shutdown()
