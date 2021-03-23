@@ -1,10 +1,10 @@
 package com.dheeraj.news.domain.entity
 
 data class NewsArticle(
-    val articleId: String,
-    val description: String,
-    val author: String,
-    val imageUrl: String,
+    var articleId: String? = null,
+    var description: String? = null,
+    var author: String? = null,
+    var imageUrl: String? = null,
     var likes: Int? = null,
     var comments: Int? = null
 ) {

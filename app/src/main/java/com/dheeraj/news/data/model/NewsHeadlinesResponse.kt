@@ -4,35 +4,35 @@ import com.google.gson.annotations.SerializedName
 
 data class NewsHeadlinesApiResponse(
     @SerializedName("articles")
-    val articles: List<Article>,
+    var articles: List<Article>? = null,
     @SerializedName("status")
-    val status: String,
+    var status: String? = null,
     @SerializedName("totalResults")
-    val totalResults: Int
+    var totalResults: Int? = null
 )
 
 data class Article(
     @SerializedName("author")
-    val author: String,
+    var author: String? = null,
     @SerializedName("content")
-    val content: String,
+    var content: String? = null,
     @SerializedName("description")
-    val description: String,
+    var description: String? = null,
     @SerializedName("publishedAt")
-    val publishedAt: String,
+    var publishedAt: String? = null,
     @SerializedName("source")
-    val source: Source,
+    var source: Source? = null,
     @SerializedName("title")
-    val title: String,
+    var title: String? = null,
     @SerializedName("url")
-    val url: String,
+    var url: String? = null,
     @SerializedName("urlToImage")
     var urlToImage: String? = null
 )
 
 data class Source(
     @SerializedName("id")
-    val id: String,
+    var id: String? = null,
     @SerializedName("name")
-    val name: String
+    var name: String? = null
 )

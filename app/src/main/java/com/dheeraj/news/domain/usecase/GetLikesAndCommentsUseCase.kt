@@ -11,7 +11,7 @@ class GetLikesAndCommentsUseCase @Inject constructor(
     private val newsRepository: NewsRepository
 ) {
     suspend fun execute(article: NewsArticle) =
-        getArticleId(article.articleId)?.let { newsArticleId ->
+        getArticleId(article.articleId ?: "")?.let { newsArticleId ->
             newsRepository.getLikes(newsArticleId)
                 .zip(newsRepository.getComments(newsArticleId)) { likes, comments ->
                     return@zip if (likes is Resource.Error || comments is Resource.Error) {
