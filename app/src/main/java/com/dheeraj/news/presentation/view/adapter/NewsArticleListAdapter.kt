@@ -39,7 +39,7 @@ class NewsArticleListAdapter(private val interaction: Interaction? = null) :
             parent,
             false
         )
-        return BlogListViewHolder(
+        return NewsArticleViewHolder(
             itemNewsArticleBinding.root,
             interaction
         )
@@ -47,7 +47,7 @@ class NewsArticleListAdapter(private val interaction: Interaction? = null) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is BlogListViewHolder -> {
+            is NewsArticleViewHolder -> {
                 holder.bind(itemNewsArticleBinding, differ.currentList[position])
             }
         }
@@ -61,7 +61,7 @@ class NewsArticleListAdapter(private val interaction: Interaction? = null) :
         differ.submitList(list)
     }
 
-    class BlogListViewHolder
+    class NewsArticleViewHolder
     constructor(
         itemView: View,
         private val interaction: Interaction?
