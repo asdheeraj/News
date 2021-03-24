@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dheeraj.news.R
 import com.dheeraj.news.databinding.FragmentNewsBinding
@@ -90,6 +91,7 @@ class NewsFragment : Fragment(), NewsArticleListAdapter.Interaction {
     }
 
     override fun onItemSelected(position: Int, item: NewsArticle) {
-        Toast.makeText(activity, "$position is clicked", Toast.LENGTH_LONG).show()
+        newsViewModel.getLikesAndComments(item)
+        findNavController().navigate(R.id.action_loadNewsArticle)
     }
 }
