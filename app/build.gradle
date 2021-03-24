@@ -92,6 +92,7 @@ dependencies {
     testImplementation(Dependencies.junit)
     androidTestImplementation(Dependencies.test_ext)
     androidTestImplementation(Dependencies.espresso_core)
+    androidTestImplementation(Dependencies.espresso_contrib)
     testImplementation(Dependencies.mockwebserver)
     androidTestImplementation(Dependencies.android_test)
     androidTestImplementation(Dependencies.hilt_android_testing)

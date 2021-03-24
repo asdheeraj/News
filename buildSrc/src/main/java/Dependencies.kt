@@ -100,6 +100,7 @@ object Dependencies {
     const val junit = "junit:junit:${Versions.junit}"
     const val test_ext = "androidx.test.ext:junit:${Versions.test_ext}"
     const val espresso_core = "androidx.test.espresso:espresso-core:${Versions.espresso_core}"
+    const val espresso_contrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso_core}"
     const val mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.mockWebServer}"
     const val hilt_android_testing = "com.google.dagger:hilt-android-testing:${Versions.hilt}"
     const val truth = "com.google.truth:truth:${Versions.truth}"
