@@ -58,6 +58,7 @@ dependencies {
     implementation(Dependencies.lifeCycleExtensions)
     implementation(Dependencies.lifeCycleRunTime)
     implementation(Dependencies.liveData)
+    implementation(Dependencies.glide)
     implementation(Dependencies.navigation_fragment)
     implementation(Dependencies.navigation_ui)
     implementation(Dependencies.fragment_ktx)

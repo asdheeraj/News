@@ -7,7 +7,7 @@ object Versions {
     // region UI
     const val life_cycle = "2.2.0"
     const val app_compat = "1.2.0"
-    const val glide = "4.9.0"
+    const val glide = "4.11.0"
     const val material = "1.3.0"
     const val constraint_layout = "2.0.4"
     const val navigation_fragment = "2.3.4"
@@ -59,6 +59,7 @@ object Dependencies {
     const val lifeCycleRunTime = "androidx.lifecycle:lifecycle-runtime:${Versions.life_cycle}"
     const val lifeCycleExtensions = "android.arch.lifecycle:extensions:${Versions.life_cycle}"
     const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.life_cycle}"
+    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val app_compat = "androidx.appcompat:appcompat:${Versions.app_compat}"
     const val material = "com.google.android.material:material:${Versions.material}"
     const val constraint_layout = "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
