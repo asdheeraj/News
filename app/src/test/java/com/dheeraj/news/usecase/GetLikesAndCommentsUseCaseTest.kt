@@ -6,6 +6,8 @@ import com.dheeraj.news.data.repository.dataSource.NewsRemoteDataSource
 import com.dheeraj.news.data.repository.dataSourceImpl.NewsRemoteDataSourceImpl
 import com.dheeraj.news.domain.repository.NewsRepository
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase
+import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_COMMENTS
+import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_LIKES
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_LIKES_AND_COMMENTS
 import com.dheeraj.news.util.Resource
 import com.google.common.truth.Truth.*
@@ -62,7 +64,8 @@ class GetLikesAndCommentsUseCaseTest {
                              assertThat(response.data?.comments).isNotNull()
                          }
                          else -> {
-                             assertThat(response.message).isEqualTo(ERROR_FETCHING_LIKES_AND_COMMENTS)
+                             assert(response.message == ERROR_FETCHING_LIKES_AND_COMMENTS || response.message ==
+                             ERROR_FETCHING_LIKES || response.message == ERROR_FETCHING_COMMENTS)
                          }
                      }
                  }

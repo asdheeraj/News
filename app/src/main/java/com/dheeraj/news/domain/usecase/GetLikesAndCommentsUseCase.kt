@@ -13,24 +13,43 @@ class GetLikesAndCommentsUseCase @Inject constructor(
     suspend fun execute(article: NewsArticle) =
         getArticleId(article.articleId ?: "")?.let { newsArticleId ->
             newsRepository.getLikes(newsArticleId)
-                .zip(newsRepository.getComments(newsArticleId)) { likes, comments ->
-                    return@zip if (likes is Resource.Error || comments is Resource.Error) {
-                        Resource.Error(
-                            message = ERROR_FETCHING_LIKES_AND_COMMENTS,
-                            data = article
-                        )
-                    } else {
-                        article.apply {
-                            this.likes = likes.data?.likes
-                            this.comments = comments.data?.comments
+                .zip(newsRepository.getComments(newsArticleId)) { likesResponse, commentsResponse ->
+                    return@zip when {
+                        likesResponse is Resource.Error && commentsResponse is Resource.Error -> {
+                            Resource.Error(
+                                message = ERROR_FETCHING_LIKES_AND_COMMENTS,
+                                data = article
+                            )
                         }
-                        Resource.Success(article)
+                        likesResponse is Resource.Error -> {
+                            article.comments = commentsResponse.data?.comments
+                            Resource.Error(
+                                message = ERROR_FETCHING_LIKES,
+                                data = article
+                            )
+                        }
+                        commentsResponse is Resource.Error -> {
+                            article.likes = likesResponse.data?.likes
+                            Resource.Error(
+                                message = ERROR_FETCHING_COMMENTS,
+                                data = article
+                            )
+                        }
+                        else -> {
+                            article.apply {
+                                likes = likesResponse.data?.likes
+                                comments = commentsResponse.data?.comments
+                            }
+                            Resource.Success(article)
+                        }
                     }
                 }
         } ?: flowOf(Resource.Error(message = ERROR_FETCHING_LIKES_AND_COMMENTS, data = article))
 
     companion object {
         const val ERROR_FETCHING_LIKES_AND_COMMENTS = "Error fetching likes and comments"
+        const val ERROR_FETCHING_LIKES = "Error fetching Likes"
+        const val ERROR_FETCHING_COMMENTS = "Error fetching Comments"
     }
 
     /**
