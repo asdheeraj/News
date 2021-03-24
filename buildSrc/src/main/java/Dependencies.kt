@@ -10,7 +10,7 @@ object Versions {
     const val glide = "4.9.0"
     const val material = "1.3.0"
     const val constraint_layout = "2.0.4"
-    const val navigation_fragment = "2.3.0"
+    const val navigation_fragment = "2.3.4"
     const val navigation_ui = "2.1.0"
     const val fragment_ktx = "1.2.5"
     // endregion UI
