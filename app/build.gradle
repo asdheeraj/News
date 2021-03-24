@@ -19,7 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.dheeraj.news.NewsTestRunner"
     }
 
     buildTypes {
@@ -93,7 +93,9 @@ dependencies {
     androidTestImplementation(Dependencies.test_ext)
     androidTestImplementation(Dependencies.espresso_core)
     testImplementation(Dependencies.mockwebserver)
+    androidTestImplementation(Dependencies.android_test)
     androidTestImplementation(Dependencies.hilt_android_testing)
+    debugImplementation(Dependencies.fragment_test)
     kaptAndroidTest(Dependencies.hilt_compiler)
     testImplementation(Dependencies.truth)
     testImplementation(Dependencies.arch_core_testing)
