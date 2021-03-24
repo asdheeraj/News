@@ -8,6 +8,7 @@
     <dimen name="space_16x">64dp</dimen>
     <dimen name="space_24x">96dp</dimen>
     <dimen name="space_32x">128dp</dimen>
+    <dimen name="space_64x">256dp</dimen>
 
 
     <dimen name="size_x">4sp</dimen>
