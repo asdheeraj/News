@@ -41,5 +41,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="News Article Description" />
 
+        <TextView
+            android:id="@+id/tv_article_author"
+            android:layout_width="0dp"
+            android:padding="@dimen/space_x"
+            android:layout_height="wrap_content"
+            android:text="@{newsArticle.author}"
+            android:textSize="@dimen/size_3x"
+            app:layout_constraintStart_toEndOf="@+id/iv_newsArticle"
+            app:layout_constraintTop_toBottomOf="@id/tv_article_desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="News Article Description" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
