@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.dheeraj.news.R
 import com.dheeraj.news.databinding.FragmentNewsArticleBinding
+import com.dheeraj.news.domain.entity.NewsArticle
 import com.dheeraj.news.presentation.viewmodel.NewsViewModel
 import com.dheeraj.news.util.Resource
 
@@ -49,18 +53,37 @@ class NewsArticleFragment : Fragment() {
             when (newsResponse) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    newsArticleBinding.newsArticle = newsResponse.data
+                    setUpUI(newsResponse.data)
                 }
                 is Resource.Loading -> {
                     showProgressBar()
                 }
                 is Resource.Error -> {
                     hideProgressBar()
-                    newsArticleBinding.newsArticle = newsResponse.data
+                    setUpUI(newsResponse.data)
                     Toast.makeText(activity, newsResponse.message ?: "", Toast.LENGTH_LONG).show()
                 }
             }
         })
+    }
+
+    private fun setUpUI(article: NewsArticle?) {
+        newsArticleBinding.apply {
+            article?.imageUrl?.let { url ->
+                loadImageUsingGlide(ivNewsArticleDetail, url)
+            }
+            newsArticle = article
+        }
+    }
+
+    private fun loadImageUsingGlide(imageView: ImageView, avatarURL: String) {
+        Glide.with(imageView.context)
+            .load(avatarURL)
+            .apply(
+                RequestOptions().placeholder(R.drawable.ic_loading)
+                    .error(R.drawable.ic_error)
+            )
+            .into(imageView)
     }
 
     private fun showProgressBar() {
