@@ -1,7 +1,6 @@
 package com.dheeraj.news.presentation.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,15 +11,18 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dheeraj.news.R
 import com.dheeraj.news.databinding.FragmentNewsBinding
+import com.dheeraj.news.domain.entity.NewsArticle
+import com.dheeraj.news.presentation.view.adapter.NewsArticleListAdapter
 import com.dheeraj.news.presentation.viewmodel.NewsViewModel
 import com.dheeraj.news.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewsFragment : Fragment() {
+class NewsFragment : Fragment(), NewsArticleListAdapter.Interaction {
 
     private val newsViewModel by lazy {initViewModel()}
     private lateinit var fragmentNewsBinding: FragmentNewsBinding
+    private lateinit var newsArticleListAdapter: NewsArticleListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,8 +52,10 @@ class NewsFragment : Fragment() {
     }
 
     private fun initViews() {
+        newsArticleListAdapter = NewsArticleListAdapter(this@NewsFragment)
         with(fragmentNewsBinding.rvNews) {
             layoutManager = LinearLayoutManager(activity)
+            adapter = newsArticleListAdapter
         }
     }
 
@@ -60,9 +64,11 @@ class NewsFragment : Fragment() {
             when (newsResponse) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    Log.d("Response: ", newsResponse.data?.toString() ?: "")
+                    setUpUI(newsResponse.data ?: arrayListOf())
                 }
-                is Resource.Loading -> showProgressBar()
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
                 is Resource.Error -> {
                     hideProgressBar()
                     Toast.makeText(activity, newsResponse.message ?: "", Toast.LENGTH_LONG).show()
@@ -71,11 +77,19 @@ class NewsFragment : Fragment() {
         })
     }
 
+    private fun setUpUI(articles: List<NewsArticle>) {
+        newsArticleListAdapter.submitList(articles)
+    }
+
     private fun showProgressBar() {
         fragmentNewsBinding.progressBar.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
         fragmentNewsBinding.progressBar.visibility = View.GONE
+    }
+
+    override fun onItemSelected(position: Int, item: NewsArticle) {
+        Toast.makeText(activity, "$position is clicked", Toast.LENGTH_LONG).show()
     }
 }
