@@ -4,9 +4,12 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.dheeraj.news.R
 import com.dheeraj.news.databinding.ItemNewsArticleBinding
 import com.dheeraj.news.domain.entity.NewsArticle
@@ -69,6 +72,19 @@ class NewsArticleListAdapter(private val interaction: Interaction? = null) :
                 interaction?.onItemSelected(adapterPosition, item)
             }
             binding.newsArticle = item
+            item.imageUrl?.let { url ->
+                loadImageUsingGlide(binding.ivNewsArticle, url)
+            }
+        }
+
+        private fun loadImageUsingGlide(imageView: ImageView, avatarURL: String) {
+            Glide.with(imageView.context)
+                .load(avatarURL)
+                .apply(
+                    RequestOptions().placeholder(R.drawable.ic_loading)
+                        .error(R.drawable.ic_error)
+                )
+                .into(imageView)
         }
 
     }
