@@ -53,7 +53,7 @@ class GetLikesAndCommentsUseCase @Inject constructor(
     }
 
     /**
-     * Takes in the raw [articleId] and returns a modified
+     * Takes in the raw [articleId] and returns a modified articleId to fetch the Likes and comments
      */
     private fun getArticleId(articleId: String) =
         articleId.split("//").lastOrNull()?.replace('/', '-')
