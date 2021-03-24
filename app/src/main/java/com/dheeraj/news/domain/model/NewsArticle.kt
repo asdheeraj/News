@@ -1,4 +1,4 @@
-package com.dheeraj.news.domain.entity
+package com.dheeraj.news.domain.model
 
 data class NewsArticle(
     var articleId: String? = null,

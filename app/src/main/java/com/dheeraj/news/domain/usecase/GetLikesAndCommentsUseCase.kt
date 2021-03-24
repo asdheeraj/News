@@ -1,8 +1,8 @@
 package com.dheeraj.news.domain.usecase
 
-import com.dheeraj.news.domain.entity.NewsArticle
+import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.domain.repository.NewsRepository
-import com.dheeraj.news.util.Resource
+import com.dheeraj.news.data.util.Resource
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.zip
 import javax.inject.Inject

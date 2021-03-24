@@ -5,7 +5,7 @@ import com.dheeraj.news.data.api.NewsApiService
 import com.dheeraj.news.data.repository.dataSource.NewsRemoteDataSource
 import com.dheeraj.news.data.repository.dataSourceImpl.NewsRemoteDataSourceImpl
 import com.dheeraj.news.domain.repository.NewsRepository
-import com.dheeraj.news.util.Resource
+import com.dheeraj.news.data.util.Resource
 import com.google.common.truth.Truth.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking

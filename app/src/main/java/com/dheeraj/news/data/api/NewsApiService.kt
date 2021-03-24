@@ -1,9 +1,9 @@
 package com.dheeraj.news.data.api
 
 import com.dheeraj.news.BuildConfig
-import com.dheeraj.news.data.model.CommentsResponse
-import com.dheeraj.news.data.model.LikesResponse
-import com.dheeraj.news.data.model.NewsHeadlinesApiResponse
+import com.dheeraj.news.data.entity.CommentsResponse
+import com.dheeraj.news.data.entity.LikesResponse
+import com.dheeraj.news.data.entity.NewsHeadlinesApiResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

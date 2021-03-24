@@ -7,7 +7,7 @@
 
         <variable
             name="newsArticle"
-            type="com.dheeraj.news.domain.entity.NewsArticle" />
+            type="com.dheeraj.news.domain.model.NewsArticle" />
 
     </data>
 

@@ -1,13 +1,13 @@
 package com.dheeraj.news.data
 
 import com.dheeraj.news.data.mappers.NewsArticleMapper
-import com.dheeraj.news.data.model.CommentsResponse
-import com.dheeraj.news.data.model.LikesResponse
-import com.dheeraj.news.data.model.NewsHeadlinesApiResponse
+import com.dheeraj.news.data.entity.CommentsResponse
+import com.dheeraj.news.data.entity.LikesResponse
+import com.dheeraj.news.data.entity.NewsHeadlinesApiResponse
 import com.dheeraj.news.data.repository.dataSource.NewsRemoteDataSource
-import com.dheeraj.news.domain.entity.NewsArticle
+import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.domain.repository.NewsRepository
-import com.dheeraj.news.util.Resource
+import com.dheeraj.news.data.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
@@ -35,7 +35,7 @@ class NewsRepoImpl @Inject constructor(
 
     private fun getNewsArticles(newsHeadlinesApiResponse: Resource<NewsHeadlinesApiResponse>): Resource<List<NewsArticle>> {
         val articles = newsHeadlinesApiResponse.data?.articles?.map { article ->
-            NewsArticleMapper().mapToEntity(article)
+            NewsArticleMapper().mapFromEntity(article)
         } ?: arrayListOf()
         return Resource.Success(articles)
     }

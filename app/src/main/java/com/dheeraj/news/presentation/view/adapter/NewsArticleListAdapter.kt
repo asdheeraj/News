@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dheeraj.news.R
 import com.dheeraj.news.databinding.ItemNewsArticleBinding
-import com.dheeraj.news.domain.entity.NewsArticle
+import com.dheeraj.news.domain.model.NewsArticle
 
 class NewsArticleListAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

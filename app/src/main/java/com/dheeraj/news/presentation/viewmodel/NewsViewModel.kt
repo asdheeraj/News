@@ -3,10 +3,10 @@ package com.dheeraj.news.presentation.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dheeraj.news.domain.entity.NewsArticle
+import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase
 import com.dheeraj.news.domain.usecase.GetNewsTopHeadlinesUseCase
-import com.dheeraj.news.util.Resource
+import com.dheeraj.news.data.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collect

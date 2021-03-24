@@ -1,4 +1,4 @@
-package com.dheeraj.news.util
+package com.dheeraj.news.data.util
 
 sealed class Resource<T>(
     val data: T? = null,

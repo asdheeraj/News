@@ -48,7 +48,8 @@ class NewsFragmentTest {
 
     @Test
     fun testNewsFragment() {
-        val scenario = launchFragmentInHiltContainer<NewsFragment>()
+        val scenario =
+            launchFragmentInHiltContainer<NewsFragment>()
     }
 
     @Test

@@ -13,9 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dheeraj.news.R
 import com.dheeraj.news.databinding.FragmentNewsArticleBinding
-import com.dheeraj.news.domain.entity.NewsArticle
+import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.presentation.viewmodel.NewsViewModel
-import com.dheeraj.news.util.Resource
+import com.dheeraj.news.data.util.Resource
 
 class NewsArticleFragment : Fragment() {
 

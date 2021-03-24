@@ -2,7 +2,7 @@ package com.dheeraj.news.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.dheeraj.news.data.repository.FakeNewsRepository
-import com.dheeraj.news.domain.entity.NewsArticle
+import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase
 import com.dheeraj.news.domain.usecase.GetNewsTopHeadlinesUseCase
 import com.dheeraj.news.presentation.viewmodel.NewsViewModel

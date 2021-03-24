@@ -1,12 +1,12 @@
 package com.dheeraj.news.data.repository.dataSourceImpl
 
 import com.dheeraj.news.data.api.NewsApiService
-import com.dheeraj.news.data.model.CommentsResponse
-import com.dheeraj.news.data.model.LikesResponse
-import com.dheeraj.news.data.model.NewsHeadlinesApiResponse
+import com.dheeraj.news.data.entity.CommentsResponse
+import com.dheeraj.news.data.entity.LikesResponse
+import com.dheeraj.news.data.entity.NewsHeadlinesApiResponse
 import com.dheeraj.news.data.repository.dataSource.NewsRemoteDataSource
-import com.dheeraj.news.util.Resource
-import com.dheeraj.news.util.safeApiCall
+import com.dheeraj.news.data.util.Resource
+import com.dheeraj.news.data.util.safeApiCall
 import javax.inject.Inject
 
 class NewsRemoteDataSourceImpl @Inject constructor(

@@ -9,7 +9,7 @@ import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_COMMENTS
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_LIKES
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_LIKES_AND_COMMENTS
-import com.dheeraj.news.util.Resource
+import com.dheeraj.news.data.util.Resource
 import com.google.common.truth.Truth.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking

@@ -12,10 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dheeraj.news.R
 import com.dheeraj.news.databinding.FragmentNewsBinding
-import com.dheeraj.news.domain.entity.NewsArticle
+import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.presentation.view.adapter.NewsArticleListAdapter
 import com.dheeraj.news.presentation.viewmodel.NewsViewModel
-import com.dheeraj.news.util.Resource
+import com.dheeraj.news.data.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
