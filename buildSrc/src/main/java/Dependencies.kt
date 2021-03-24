@@ -43,6 +43,8 @@ object Versions {
     const val espresso_core = "3.3.0"
     const val mockWebServer = "4.9.0"
     const val truth = "1.1.2"
+    const val arch_core_testing = "2.1.0"
+    const val coroutines_testing = "1.3.4"
     // endregion Testing
 }
 
@@ -98,5 +100,7 @@ object Dependencies {
     const val mockwebserver = "com.squareup.okhttp3:mockwebserver:${Versions.mockWebServer}"
     const val hilt_android_testing = "com.google.dagger:hilt-android-testing:${Versions.hilt}"
     const val truth = "com.google.truth:truth:${Versions.truth}"
+    const val arch_core_testing = "androidx.arch.core:core-testing:${Versions.arch_core_testing}"
+    const val coroutines_testing = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines_testing}"
     // endregion Testing
 }

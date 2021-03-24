@@ -92,5 +92,7 @@ dependencies {
     androidTestImplementation(Dependencies.hilt_android_testing)
     kaptAndroidTest(Dependencies.hilt_compiler)
     testImplementation(Dependencies.truth)
+    testImplementation(Dependencies.arch_core_testing)
+    testImplementation(Dependencies.coroutines_testing)
     // endregion testing
 }
