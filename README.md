@@ -1,6 +1,6 @@
 # Clean Architecture Implementation of the newsapi.org API
 
-This repository contains a sample app that implements Clean Architecture in MVM using Kotlin, Live Data, ViewModel, Retrofit, Hilt, Coroutines, Flow and etc.
+This repository contains a sample app that implements Clean Architecture in MVVM using Kotlin, Live Data, ViewModel, Retrofit, Hilt, Coroutines, Flow and etc.
 
 #### Instructions to open the project in Android Studio:
 1. Open Android Studio
@@ -13,6 +13,6 @@ This repository contains a sample app that implements Clean Architecture in MVM 
 1. **data**: The Data Layer responsible for Fetching the Data from a Remote or a Local Data Source
 2. **di**: The Dependency Injection Package responsible for Providing the required Dependencies
 3. **domain**: The Domain Layer responsible for interacting with the Data and the Presentation Layer and is responsible to hold the Domain Logic
-4. **presentation**: The Presentation Layer responsible for interacting with the User and display the required data.
+4. **presentation**: The Presentation Layer responsible for interacting with the User and displaying the required data.
 5. **androidTest**: A Package holding the various UI test cases for the project
 6. **test**: A Package holding the various unit test cases for the project, including tests for data flow and business logic
