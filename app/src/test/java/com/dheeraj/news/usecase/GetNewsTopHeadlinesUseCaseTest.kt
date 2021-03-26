@@ -2,6 +2,7 @@ package com.dheeraj.news.usecase
 
 import com.dheeraj.news.data.NewsRepoImpl
 import com.dheeraj.news.data.api.NewsApiService
+import com.dheeraj.news.data.mappers.NewsArticleMapper
 import com.dheeraj.news.data.repository.dataSource.NewsRemoteDataSource
 import com.dheeraj.news.data.repository.dataSourceImpl.NewsRemoteDataSourceImpl
 import com.dheeraj.news.domain.repository.NewsRepository
@@ -24,6 +25,7 @@ class GetNewsTopHeadlinesUseCaseTest {
     private lateinit var newsRemoteDataSource: NewsRemoteDataSource
     private lateinit var mockWebServer: MockWebServer
     private lateinit var newsApiService: NewsApiService
+    private lateinit var newsArticleMapper: NewsArticleMapper
 
     @Before
     fun setUp() {
@@ -34,7 +36,8 @@ class GetNewsTopHeadlinesUseCaseTest {
             .build()
             .create(NewsApiService::class.java)
         newsRemoteDataSource = NewsRemoteDataSourceImpl(newsApiService)
-        newsRepository = NewsRepoImpl(newsRemoteDataSource)
+        newsArticleMapper = NewsArticleMapper()
+        newsRepository = NewsRepoImpl(newsRemoteDataSource, newsArticleMapper)
         getNewsTopHeadlinesUseCase = GetNewsTopHeadlinesUseCase(newsRepository)
     }
 
