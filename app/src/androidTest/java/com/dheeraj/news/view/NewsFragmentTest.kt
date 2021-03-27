@@ -2,6 +2,7 @@ package com.dheeraj.news.view
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -68,7 +69,7 @@ class NewsFragmentTest {
     }
 
     @Test
-    fun getNewsArticles_success_visibleRecyclerview_scrollToPosition() {
+    fun getNewsArticles_success_visibleRecyclerview_scrollToPosition_performClick() {
         onView(withId(R.id.rv_news))
             .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withId(R.id.rv_news)).perform(
@@ -85,6 +86,29 @@ class NewsFragmentTest {
             .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withId(R.id.tv_news_article_comments))
             .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
+
+    @Test
+    fun getNewsArticles_success_visibleRecyclerview_scrollToPosition_performClick_pressBack() {
+        onView(withId(R.id.rv_news))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.rv_news)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<NewsArticleViewHolder>(
+                1, //since the mock response has 25 items, checking the click at position 24
+                ViewActions.click()
+            )
+        )
+        onView(withId(R.id.iv_newsArticle_detail))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.tv_news_article))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.tv_news_article_likes))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.tv_news_article_comments))
+            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        pressBack()
+        onView(withId(R.id.rv_news))
+            .check(matches(isDisplayed()))
     }
 
     @InstallIn(SingletonComponent::class)
