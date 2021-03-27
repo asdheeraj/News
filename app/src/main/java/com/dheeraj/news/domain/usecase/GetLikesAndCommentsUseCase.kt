@@ -3,6 +3,7 @@ package com.dheeraj.news.domain.usecase
 import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.domain.repository.NewsRepository
 import com.dheeraj.news.data.util.Resource
+import com.dheeraj.news.util.getArticleId
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
@@ -11,7 +12,7 @@ class GetLikesAndCommentsUseCase @Inject constructor(
     private val newsRepository: NewsRepository
 ) {
     suspend fun execute(article: NewsArticle) =
-        getArticleId(article.articleId ?: "")?.let { newsArticleId ->
+        getArticleId(article.articleId)?.let { newsArticleId ->
             newsRepository.getLikes(newsArticleId)
                 .zip(newsRepository.getComments(newsArticleId)) { likesResponse, commentsResponse ->
                     return@zip when {
@@ -51,10 +52,4 @@ class GetLikesAndCommentsUseCase @Inject constructor(
         const val ERROR_FETCHING_LIKES = "Error fetching Likes"
         const val ERROR_FETCHING_COMMENTS = "Error fetching Comments"
     }
-
-    /**
-     * Takes in the raw [articleId] and returns a modified articleId to fetch the Likes and comments
-     */
-    private fun getArticleId(articleId: String) =
-        articleId.split("//").lastOrNull()?.replace('/', '-')
 }

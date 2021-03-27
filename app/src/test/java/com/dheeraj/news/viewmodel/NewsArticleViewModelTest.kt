@@ -42,7 +42,7 @@ class NewsArticleViewModelTest {
     @Test
     fun getCommentsAndLikes_expectedResult() {
         testCoroutineRule.runBlockingTest {
-            newsArticleViewModel.getLikesAndComments(NewsArticle())
+            newsArticleViewModel.getLikesAndComments(NewsArticle(articleId = "https://www.cbsnews.com/live-updates/boulder-shooting-colorado-2021-03-23/\""))
             val newsArticle = newsArticleViewModel.newsArticleLiveData.getOrAwaitValue()
             val isDataAvailable = newsArticleViewModel.isDataAvailable.getOrAwaitValue()
             assert(isDataAvailable)
