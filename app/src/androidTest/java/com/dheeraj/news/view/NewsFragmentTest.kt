@@ -4,6 +4,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -55,60 +56,37 @@ class NewsFragmentTest {
 
     @Test
     fun getNewsArticles_success_visibleRecyclerview() {
-        onView(withId(R.id.rv_news))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.rv_news)).check(matches(isDisplayed()))
     }
 
     @Test
     fun getNewsArticles_success_visibleRecyclerview_itemClick() {
-        onView(withId(R.id.rv_news))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.rv_news)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_news)).perform(
             RecyclerViewActions.scrollToPosition<NewsArticleViewHolder>(1)
             )
     }
 
     @Test
-    fun getNewsArticles_success_visibleRecyclerview_scrollToPosition_performClick() {
-        onView(withId(R.id.rv_news))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.rv_news)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<NewsArticleViewHolder>(
-                1, //since the mock response has 25 items, checking the click at position 24
-                ViewActions.click()
-            )
-        )
-        onView(withId(R.id.iv_newsArticle_detail))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.tv_news_article))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.tv_news_article_likes))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.tv_news_article_comments))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-    }
-
-    @Test
     fun getNewsArticles_success_visibleRecyclerview_scrollToPosition_performClick_pressBack() {
-        onView(withId(R.id.rv_news))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.rv_news)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_news)).perform(
             RecyclerViewActions.actionOnItemAtPosition<NewsArticleViewHolder>(
-                1, //since the mock response has 25 items, checking the click at position 24
+                1, //since the mock response has 2 items, checking the click at position 1
                 ViewActions.click()
             )
         )
-        onView(withId(R.id.iv_newsArticle_detail))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.tv_news_article))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.tv_news_article_likes))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.tv_news_article_comments))
-            .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.rv_news)).check(doesNotExist())
+        onView(withId(R.id.iv_newsArticle_detail)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_news_article)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_news_article_likes)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_news_article_comments)).check(matches(isDisplayed()))
         pressBack()
-        onView(withId(R.id.rv_news))
-            .check(matches(isDisplayed()))
+        onView(withId(R.id.rv_news)).check(matches(isDisplayed()))
+        onView(withId(R.id.iv_newsArticle_detail)).check(doesNotExist())
+        onView(withId(R.id.tv_news_article)).check(doesNotExist())
+        onView(withId(R.id.tv_news_article_likes)).check(doesNotExist())
+        onView(withId(R.id.tv_news_article_comments)).check(doesNotExist())
     }
 
     @InstallIn(SingletonComponent::class)
