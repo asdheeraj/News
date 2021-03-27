@@ -1,5 +1,6 @@
 package com.dheeraj.news.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,30 +17,20 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsViewModel @Inject constructor(
     private val getNewsTopHeadlinesUseCase: GetNewsTopHeadlinesUseCase,
-    private val getLikesAndCommentsUseCase: GetLikesAndCommentsUseCase,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    val newsArticlesLiveData: MutableLiveData<Resource<List<NewsArticle>>> = MutableLiveData()
-    val newsArticleLiveData: MutableLiveData<Resource<NewsArticle>> = MutableLiveData()
+    private val _newsArticlesLiveData: MutableLiveData<Resource<List<NewsArticle>>> = MutableLiveData()
+    val newsArticlesLiveData : LiveData<Resource<List<NewsArticle>>> = _newsArticlesLiveData
 
     init {
         getNewsTopHeadlines()
     }
 
     fun getNewsTopHeadlines() = viewModelScope.launch(dispatcher) {
-        with(newsArticlesLiveData) {
+        with(_newsArticlesLiveData) {
             postValue(Resource.Loading())
             postValue(getNewsTopHeadlinesUseCase.execute())
-        }
-    }
-
-    fun getLikesAndComments(article: NewsArticle) = viewModelScope.launch(dispatcher) {
-        with(newsArticleLiveData) {
-            postValue(Resource.Loading())
-            getLikesAndCommentsUseCase.execute(article).collect { articleResponse ->
-                postValue(articleResponse)
-            }
         }
     }
 }

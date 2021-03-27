@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NewsFragment : Fragment(), NewsArticleListAdapter.Interaction {
 
-    private val newsViewModel by lazy {initViewModel()}
+    private val newsViewModel: NewsViewModel by viewModels()
     private lateinit var fragmentNewsBinding: FragmentNewsBinding
     private lateinit var newsArticleListAdapter: NewsArticleListAdapter
 
@@ -39,17 +40,6 @@ class NewsFragment : Fragment(), NewsArticleListAdapter.Interaction {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         subscribeObservers()
-    }
-
-    private fun initViewModel(): NewsViewModel {
-        return when (activity) {
-            is NewsActivity -> {
-                (activity as NewsActivity).getViewModelInstance()
-            }
-            else -> {
-                throw IllegalArgumentException("Unknown Activity Instance")
-            }
-        }
     }
 
     private fun initViews() {
@@ -91,7 +81,7 @@ class NewsFragment : Fragment(), NewsArticleListAdapter.Interaction {
     }
 
     override fun onItemSelected(position: Int, item: NewsArticle) {
-        newsViewModel.getLikesAndComments(item)
-        findNavController().navigate(R.id.action_loadNewsArticle)
+        val action = NewsFragmentDirections.actionLoadNewsArticle(item)
+        findNavController().navigate(action)
     }
 }

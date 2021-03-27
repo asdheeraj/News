@@ -8,7 +8,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dheeraj.news.R
@@ -16,10 +18,14 @@ import com.dheeraj.news.databinding.FragmentNewsArticleBinding
 import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.presentation.viewmodel.NewsViewModel
 import com.dheeraj.news.data.util.Resource
+import com.dheeraj.news.presentation.viewmodel.NewsArticleViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsArticleFragment : Fragment() {
 
-    private val newsViewModel by lazy {initViewModel()}
+    private val args: NewsArticleFragmentArgs by navArgs()
+    private val newsArticleViewModel: NewsArticleViewModel by viewModels()
     private lateinit var newsArticleBinding: FragmentNewsArticleBinding
 
     override fun onCreateView(
@@ -29,6 +35,7 @@ class NewsArticleFragment : Fragment() {
     ): View? {
         newsArticleBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_news_article, container, false)
+        newsArticleViewModel.getLikesAndComments(args.newsArticle)
         return newsArticleBinding.root
     }
 
@@ -37,19 +44,8 @@ class NewsArticleFragment : Fragment() {
         subscribeObservers()
     }
 
-    private fun initViewModel(): NewsViewModel {
-        return when (activity) {
-            is NewsActivity -> {
-                (activity as NewsActivity).getViewModelInstance()
-            }
-            else -> {
-                throw IllegalArgumentException("Unknown Activity Instance")
-            }
-        }
-    }
-
     private fun subscribeObservers() {
-        newsViewModel.newsArticleLiveData.observe(viewLifecycleOwner, Observer { newsResponse ->
+        newsArticleViewModel.newsArticleLiveData.observe(viewLifecycleOwner, Observer { newsResponse ->
             when (newsResponse) {
                 is Resource.Success -> {
                     hideProgressBar()
