@@ -15,9 +15,5 @@
     <fragment
         android:id="@+id/newsArticleFragment"
         android:name="com.dheeraj.news.presentation.view.NewsArticleFragment"
-        android:label="NewsArticleFragment" >
-        <argument
-            android:name="newsArticle"
-            app:argType="com.dheeraj.news.domain.model.NewsArticle" />
-    </fragment>
+        android:label="NewsArticleFragment" />
 </navigation>
