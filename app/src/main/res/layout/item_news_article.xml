@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="newsArticle"
+            type="com.dheeraj.news.domain.model.NewsArticle" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_2x">
+
+        <ImageView
+            android:id="@+id/iv_newsArticle"
+            android:layout_width="@dimen/space_32x"
+            android:layout_height="@dimen/space_24x"
+            android:padding="@dimen/space_x"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_article_desc"
+            tools:ignore="contentDescription" />
+
+        <TextView
+            android:id="@+id/tv_article_desc"
+            android:layout_width="0dp"
+            android:padding="@dimen/space_x"
+            android:layout_height="wrap_content"
+            android:text="@{newsArticle.description}"
+            android:textSize="@dimen/size_4x"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@+id/iv_newsArticle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="News Article Description" />
+
+        <TextView
+            android:id="@+id/tv_article_author"
+            android:layout_width="0dp"
+            android:padding="@dimen/space_x"
+            android:layout_height="wrap_content"
+            android:text="@{newsArticle.author}"
+            android:textSize="@dimen/size_3x"
+            app:layout_constraintStart_toEndOf="@+id/iv_newsArticle"
+            app:layout_constraintTop_toBottomOf="@id/tv_article_desc"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="News Article Description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
