@@ -1,3 +1,5 @@
 <resources>
   <string name="app_name">News</string>
+  <string name="likes">%s Likes</string>
+  <string name="comments">%s Comments</string>
 </resources>
