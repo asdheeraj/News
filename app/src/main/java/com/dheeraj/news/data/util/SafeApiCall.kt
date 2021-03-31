@@ -9,7 +9,7 @@ suspend fun <T : Any> safeApiCall(
     if (response.isSuccessful) {
         responseToResource(response)
     } else {
-        Resource.Error(message = response.message())
+        Resource.Error(message = response.errorBody()?.string() ?: "Error Fetching Data")
     }
 } catch (e: Exception) {
     Resource.Error(message = e.message ?: "Unknown Exception")
