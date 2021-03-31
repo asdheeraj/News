@@ -18,10 +18,7 @@ suspend fun <T : Any> safeApiCall(
 private fun <T : Any> responseToResource(
     response: Response<T>
 ): Resource<T> {
-    if (response.isSuccessful) {
-        return response.body()?.let { data ->
-            Resource.Success(data)
-        } ?: Resource.Error(response.message())
-    }
-    return Resource.Error(response.message())
+    return response.body()?.let { data ->
+        Resource.Success(data)
+    } ?: Resource.Error(response.message())
 }
