@@ -75,10 +75,10 @@ class NewsApiServiceTest {
     fun getLikes_sentRequest_receivedExpected() {
         runBlocking {
             enqueueMockResponse("likes.json")
-            val response = newsApiService.getLikes("/").body()
+            val response = newsApiService.getLikes("/www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html").body()
             val request = mockWebServer.takeRequest()
             assertThat(response).isNotNull()
-            assertThat(request.path).isEqualTo("/")
+            assertThat(request.path).isEqualTo("/www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html")
             assertThat(response?.likes).isEqualTo(96)
         }
     }
@@ -87,10 +87,10 @@ class NewsApiServiceTest {
     fun getComments_sentRequest_receivedExpected() {
         runBlocking {
             enqueueMockResponse("comments.json")
-            val response = newsApiService.getComments("/").body()
+            val response = newsApiService.getComments("/www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html").body()
             val request = mockWebServer.takeRequest()
             assertThat(response).isNotNull()
-            assertThat(request.path).isEqualTo("/")
+            assertThat(request.path).isEqualTo("/www.theverge.com-2020-7-21-21332300-nikon-z5-full-frame-mirrorless-camera-price-release-date-specs-index.html")
             assertThat(response?.comments).isEqualTo(96)
         }
     }

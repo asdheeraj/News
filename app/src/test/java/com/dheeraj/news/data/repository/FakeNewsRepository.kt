@@ -5,15 +5,27 @@ import com.dheeraj.news.data.entity.LikesResponse
 import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.domain.repository.NewsRepository
 import com.dheeraj.news.data.util.Resource
+import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_COMMENTS
+import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_LIKES
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class FakeNewsRepository : NewsRepository {
 
-    private var shouldReturnError = false
+    private var headLinesShouldReturnError = false
+    private var likesShouldReturnError = false
+    private var commentsShouldReturnError = false
 
-    fun setReturnError(value: Boolean) {
-        shouldReturnError = value
+    fun setHeadlinesReturnError(value: Boolean) {
+        headLinesShouldReturnError = value
+    }
+
+    fun setLikesReturnError(value: Boolean) {
+        likesShouldReturnError = value
+    }
+
+    fun setCommentsReturnError(value: Boolean) {
+        commentsShouldReturnError = value
     }
 
     override suspend fun getTopHeadlines(): Resource<List<NewsArticle>> {
@@ -29,7 +41,7 @@ class FakeNewsRepository : NewsRepository {
     }
 
     private fun getFakeApiResponse(): Resource<List<NewsArticle>> {
-        return if (shouldReturnError) {
+        return if (headLinesShouldReturnError) {
             Resource.Error(message = "Error Fetching Headlines")
         } else {
             Resource.Success(
@@ -52,16 +64,16 @@ class FakeNewsRepository : NewsRepository {
     }
 
     private fun getFakeLikesResponse(): Resource<LikesResponse> {
-        return  if (shouldReturnError) {
-            Resource.Error(message = "Error Fetching Likes")
+        return  if (likesShouldReturnError) {
+            Resource.Error(message = ERROR_FETCHING_LIKES)
         } else {
             Resource.Success(data = LikesResponse(likes = 56))
         }
     }
 
     private fun getFakeCommentsResponse(): Resource<CommentsResponse> {
-        return  if (shouldReturnError) {
-            Resource.Error(message = "Error Fetching Comments")
+        return  if (commentsShouldReturnError) {
+            Resource.Error(message = ERROR_FETCHING_COMMENTS)
         } else {
             Resource.Success(data = CommentsResponse(comments = 56))
         }
