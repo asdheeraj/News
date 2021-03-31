@@ -1,85 +1,87 @@
 package com.dheeraj.news.usecase
 
-import com.dheeraj.news.data.NewsRepoImpl
-import com.dheeraj.news.data.api.NewsApiService
-import com.dheeraj.news.data.mappers.NewsArticleMapper
-import com.dheeraj.news.data.repository.dataSource.NewsRemoteDataSource
-import com.dheeraj.news.data.repository.dataSourceImpl.NewsRemoteDataSourceImpl
-import com.dheeraj.news.domain.repository.NewsRepository
+import com.dheeraj.news.data.repository.FakeNewsRepository
+import com.dheeraj.news.domain.model.NewsArticle
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_COMMENTS
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_LIKES
 import com.dheeraj.news.domain.usecase.GetLikesAndCommentsUseCase.Companion.ERROR_FETCHING_LIKES_AND_COMMENTS
-import com.dheeraj.news.data.util.Resource
-import com.google.common.truth.Truth.*
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import okio.buffer
-import okio.source
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class GetLikesAndCommentsUseCaseTest {
     private lateinit var getLikesAndCommentsUseCase: GetLikesAndCommentsUseCase
-    private lateinit var newsRepository: NewsRepository
-    private lateinit var newsRemoteDataSource: NewsRemoteDataSource
-    private lateinit var mockWebServer: MockWebServer
-    private lateinit var newsApiService: NewsApiService
-    private lateinit var newsArticleMapper: NewsArticleMapper
+    private lateinit var newsRepository: FakeNewsRepository
 
     @Before
     fun setUp() {
-        mockWebServer = MockWebServer()
-        newsApiService = Retrofit.Builder()
-            .baseUrl(mockWebServer.url(""))
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(NewsApiService::class.java)
-        newsRemoteDataSource = NewsRemoteDataSourceImpl(newsApiService)
-        newsArticleMapper = NewsArticleMapper()
-        newsRepository = NewsRepoImpl(newsRemoteDataSource, newsArticleMapper)
+        newsRepository = FakeNewsRepository()
         getLikesAndCommentsUseCase = GetLikesAndCommentsUseCase(newsRepository)
-    }
-
-    private fun enqueueMockResponse(fileName: String) {
-        javaClass.classLoader?.getResourceAsStream(fileName)?.let { inputStream ->
-            val mockResponse = MockResponse().apply {
-                setBody(inputStream.source().buffer().readString(Charsets.UTF_8))
-            }
-            mockWebServer.enqueue(mockResponse)
-        }
     }
 
     @Test
     fun getLikesAndComments_sentRequest_receivedExpected() {
         runBlocking {
-            enqueueMockResponse("newsresponse.json")
-             newsRepository.getTopHeadlines().data?.last()?.let { newsArticle ->
-                 getLikesAndCommentsUseCase.execute(newsArticle).collect { response ->
-                     when (response) {
-                         is Resource.Success -> {
-                             assertThat(response.data).isNotNull()
-                             assertThat(response.data?.likes).isNotNull()
-                             assertThat(response.data?.comments).isNotNull()
-                         }
-                         else -> {
-                             assert(response.message == ERROR_FETCHING_LIKES_AND_COMMENTS || response.message ==
-                             ERROR_FETCHING_LIKES || response.message == ERROR_FETCHING_COMMENTS)
-                         }
-                     }
-                 }
+            getLikesAndCommentsUseCase.execute(getNewsArticle()).collect { response ->
+                assertThat(response.data).isNotNull()
+                assertThat(response.data?.likes).isNotNull()
+                assertThat(response.data?.comments).isNotNull()
+                assertThat(response.message).isNull()
             }
-
         }
     }
 
-    @After
-    fun tearDown() {
-        mockWebServer.shutdown()
+    @Test
+    fun getLikesAndComments_sentRequest_receivedErrorLikes() {
+        newsRepository.setLikesReturnError(true)
+        runBlocking {
+            getLikesAndCommentsUseCase.execute(getNewsArticle()).collect { response ->
+                assertThat(response.data).isNotNull()
+                assertThat(response.data?.likes).isNull()
+                assertThat(response.data?.comments).isNotNull()
+                assert(response.message == ERROR_FETCHING_LIKES)
+            }
+        }
+    }
+
+    @Test
+    fun getLikesAndComments_sentRequest_receivedErrorComments() {
+        newsRepository.setCommentsReturnError(true)
+        runBlocking {
+            getLikesAndCommentsUseCase.execute(getNewsArticle()).collect { response ->
+                assertThat(response.data).isNotNull()
+                assertThat(response.data?.likes).isNotNull()
+                assertThat(response.data?.comments).isNull()
+                assert(response.message == ERROR_FETCHING_COMMENTS)
+            }
+        }
+    }
+
+    @Test
+    fun getLikesAndComments_sentRequest_receivedErrorLikesComments() {
+        newsRepository.apply {
+            setCommentsReturnError(true)
+            setLikesReturnError(true)
+        }
+        runBlocking {
+            getLikesAndCommentsUseCase.execute(getNewsArticle()).collect { response ->
+                assertThat(response.data).isNotNull()
+                assertThat(response.data?.likes).isNull()
+                assertThat(response.data?.comments).isNull()
+                assert(response.message == ERROR_FETCHING_LIKES_AND_COMMENTS)
+            }
+        }
+    }
+
+    private fun getNewsArticle(): NewsArticle {
+        return NewsArticle(
+            articleId = "https://www.cbbcnews.com/live-updates/boulder-shooting-colorado-2021-03-23/",
+            description = "One of the 10 people killed was a police officer, and a suspect is in custody.",
+            author = "Victoria Albert Junior",
+            imageUrl = "https://cbsnews2.cbsistatic.com/hub/i/r/2021/03/23/2fe4a705-1df3-46f4-a7f4-066c90d3ff7b/thumbnail/1200x630/243bbb0c18ab20a652fc73828e2c326c/gettyimages-1308536283.jpg"
+        )
     }
 }
